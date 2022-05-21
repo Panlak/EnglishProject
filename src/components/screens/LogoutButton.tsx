@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { Text, TouchableOpacity, StyleSheet } from "react-native";
-import { AuthContext } from "../../src/auth/AuthContext";
+import { AuthContext } from "../../auth/AuthContext";
 
 
 const LogoutButton = () => {

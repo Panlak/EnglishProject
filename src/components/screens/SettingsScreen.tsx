@@ -6,7 +6,8 @@ import LogoutButton from './LogoutButton';
 const SettingsScreen = ({ navigation } : any) => {
     return (
         <View style={{ flex: 1, alignItems: 'center' }} >
-           <CustomButton onPress={() => navigation.navigate("PersonalCabinet")}  text = {"Personal Cabinet"}/>
+           
+           <CustomButton onPress={() => navigation.navigate("PersonalInformation")}  text = {"Personal Information"}/>
            <LogoutButton/> 
         </View>
     );

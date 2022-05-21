@@ -1,12 +1,12 @@
 import React, { useContext } from 'react'
 import { AuthContext } from '../auth/AuthContext';
 import { NavigationContainer } from '@react-navigation/native';
-import MainContainer from '../../navigation/MainContainer';
-import SignInScreen from '../../navigation/screens/SignInScreen';
-import User from '../../models/user/UserModel'
+import MainContainer from '../components/MainContainer';
+import SignInScreen from '../components/screens/authScreens/SignInScreen';
+import User from '../../models/user/LoginModel'
 import { navigate, navigationRef } from "./Navigation";
 import { createStackNavigator } from "@react-navigation/stack";
-import AuthTabs from '../../navigation/screens/AuthTabs';
+import AuthTabs from '../components/screens/AuthTabs';
 
 type AuthParamList = {
     AppTabs: undefined;

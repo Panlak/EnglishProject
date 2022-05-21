@@ -1,8 +1,6 @@
 import APIRoutes from "../APIRoutes";
 import APIService from "../APIService";
-import UserModel from "../../models/user/RegisterModel";
-import User from "../../models/user/UserModel"
-import AuthenticationResult from "../../models/authentication-models/AuthenticationResult";
+import User from "../../models/user/LoginModel"
 
 const login = APIRoutes.getLoginUrl();
 const singup = APIRoutes.getSignUpUrl();

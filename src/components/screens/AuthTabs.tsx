@@ -6,9 +6,9 @@ import NewDictionaryScreen from './NewDictionaryScreen';
 import CurrentDictionary from './CurrentDictionaryScreen';
 import { View } from 'react-native';
 import NewWordScreen from './NewWordScreen';
-import * as navigation from '../../src/navigation/Navigation'
-import SignInScreen from './SignInScreen';
-import SignUpScreen from './SignUpScreen';
+import SignInScreen from './authScreens/SignInScreen';
+import SignUpScreen from './authScreens/SignUpScreen';
+
 const Stack = createStackNavigator();
 
 const AuthTabs = () => {

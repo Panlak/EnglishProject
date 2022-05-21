@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
-import { AuthContext } from '../../src/auth/AuthContext';
+import { AuthContext } from '../../auth/AuthContext';
 
 
 type LoginButtonProps = {
@@ -14,7 +14,7 @@ const CustomButton  = (props: LoginButtonProps) => {
     return(
         <View>
             <TouchableOpacity  onPress={() => login(props.email, props.password)} style={[styles.container]}>
-                <Text>SignIn</Text>
+                <Text style = {{color: 'white', fontSize:18,fontWeight: '800'}}>Sign In</Text>
             </TouchableOpacity >
         </View>
     );
@@ -23,13 +23,14 @@ const CustomButton  = (props: LoginButtonProps) => {
 const styles = StyleSheet.create({
     container: {
       
-        width: '100%',
+        width: 300,
         
         padding: 15,
         marginVertical: 5,
-
+        borderColor:'white',borderWidth:2,
         alignItems: 'center',
         borderRadius: 5,
+        backgroundColor: '#4AD3E3'
     },
 
     container_PRIMARY: {

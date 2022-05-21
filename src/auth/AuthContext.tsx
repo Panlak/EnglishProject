@@ -2,7 +2,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import React, { useEffect, useState } from 'react';
 import { createContext } from "react";
 import AuthService from '../../api-service/auth-service/AuthService';
-import User from '../../models/user/UserModel';
+import User from '../../models/user/LoginModel';
 import StorageManager from '../components/storage/StorageManager';
 
 const returnType: any = {};
@@ -22,8 +22,11 @@ export const AuthProvider = ({children}: any) => {
         setLoading(true);
         AuthService.Login({user: { email: email, password: password }})
         .then((res) => {
+            console.warn(res)
             StorageManager.setAuthData(res.data);
             setUser(res.data.user);
+        }).catch(err =>{
+            console.warn(err)
         });
         setLoading(false);
     };

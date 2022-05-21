@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { View, Text, Image, StyleSheet, TextInput, Pressable } from 'react-native';
 import { TouchableOpacity, TouchableWithoutFeedback } from 'react-native-gesture-handler';
-import DictionaryService from '../../api-service/dictionary-service/DictionaryService'
+import DictionaryService from '../../../api-service/dictionary-service/DictionaryService'
 import CustomButton from './CustomButton';
 
 const AllDictionaries = ({ navigation }: any) => {

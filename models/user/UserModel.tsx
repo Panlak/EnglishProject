@@ -1,8 +1,13 @@
-type User = null | {
-    user :{ 
-        email: string,
-        password: string
+type UserModel = {
+    id: number,
+    email: string,
+    passed_course: number,
+    ratting: number,
+    knowledge_lvl:{
+        id: number,
+        name: string
     }
-}
 
-export default User;   
+} 
+
+export default UserModel;

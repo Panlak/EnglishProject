@@ -1,9 +1,18 @@
 import AsyncStorage from "@react-native-community/async-storage";
 import AuthenticationResult from "../../../models/authentication-models/AuthenticationResult";
+import UserModel from "../../../models/user/UserModel";
+
 
 
 const StorageManager = {
+
+    getAuthData: async ()  => {
+        const storedUser = await AsyncStorage.getItem("user");
+        return JSON.parse(storedUser!) as UserModel
+    },
+
     setAuthData: (data: AuthenticationResult) => {
+        console.warn(data)
         AsyncStorage.setItem("userToken", data.user.token);
         AsyncStorage.setItem("user", JSON.stringify(data.user));
     },

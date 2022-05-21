@@ -9,6 +9,8 @@ import HomeScreen from './screens/HomeScreen';
 import SettingsScreen from './screens/SettingsScreen';
 import PersonalCabinet from './screens/PersonalCabinet';
 import SettingsTabs from './screens/SettingsTabs';
+import PersonalCabinetTabs from './screens/PersonalCabinetTabs';
+import HomeTabs from './screens/HomeTabs';
 
 //Screen names
 
@@ -16,7 +18,7 @@ import SettingsTabs from './screens/SettingsTabs';
 const homeName = "Home";
 const detailsName = "Details";
 const settingsName = "Settings";
-const personalCabinet = "Personal Cabinet"
+const personalCabinet = "Cabinet"
 const Tab = createBottomTabNavigator();
 
 const MainContainer = () =>{
@@ -37,6 +39,9 @@ const MainContainer = () =>{
             } else if (rn === settingsName) {
               iconName = focused ? 'settings' : 'settings-outline';
             }
+            else if (rn == personalCabinet){
+              iconName = focused ? 'person' : 'person-outline'
+            }
             return <Ionicons name={iconName} size={size} color={color} />;
           },
         })}
@@ -46,11 +51,9 @@ const MainContainer = () =>{
           labelStyle: { paddingBottom: 0, fontSize: 15 },
           style: { padding: 20, height: 30}
         }}>
-        <Tab.Screen name={homeName} component={HomeScreen} />
-        
-        <Tab.Screen name={settingsName} component={SettingsTabs}  options={{
-                        headerShown: false,
-                    }}/>
+        <Tab.Screen name={homeName} component={HomeTabs} options={{headerShown: false}}/>
+        <Tab.Screen name={personalCabinet} component={PersonalCabinetTabs}  options={{headerShown: false}}/>
+        <Tab.Screen name={settingsName} component={SettingsTabs}  options={{headerShown: false}}/>
       </Tab.Navigator>
   )
 }

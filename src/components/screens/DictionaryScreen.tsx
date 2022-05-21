@@ -1,19 +1,23 @@
 import React, {useState, useEffect} from 'react';
 import {View, Text, Image, StyleSheet, TextInput} from 'react-native';
 import AsyncStorage from "@react-native-community/async-storage";
-import AuthService from '../../api-service/auth-service/AuthService';
-import DictionaryService from '../../api-service/dictionary-service/DictionaryService'
-import CustomButton from '../../navigation/screens/CustomButton';
-import { IconButton } from '../../navigation/screens/IconButton';
+
 import AllDictionaries from './AllDictionaries';
+import CustomButton from './CustomButton';
+import BackButton from '../Buttons/BackButton';
 
 const DictionaryScreen = ({ navigation } : any) =>{
  
     return(
-        <View style = {[styles.container]}>
-            <CustomButton text= "Create new Ditionary" onPress={() => navigation.navigate("New Dictionary Screen")} /> 
-            <Text style = {styles.text}>Dictionaries</Text>
-            <AllDictionaries navigation = {navigation}/>
+        <View >
+            <BackButton/>
+            <View style = {[styles.container]}>
+                
+                <CustomButton text= "Create new Ditionary" onPress={() => navigation.navigate("New Dictionary Screen")} /> 
+                <Text style = {styles.text}>Dictionaries</Text>
+                <AllDictionaries navigation = {navigation}/>
+            </View>
+            
         </View>
     );
 }

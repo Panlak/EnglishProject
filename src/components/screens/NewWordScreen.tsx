@@ -2,9 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, TextInput } from 'react-native';
 import AsyncStorage from "@react-native-community/async-storage";
 import CustomButton from './CustomButton';
-import DictionaryService from '../../api-service/dictionary-service/DictionaryService';
-import WordService from '../../api-service/word-service/WordService';
-import Word from '../../models/words/WordModel';
+import Word from '../../../models/words/WordModel';
+import WordService from '../../../api-service/word-service/WordService';
+import BackButton from '../Buttons/BackButton';
+
 const NewWordScreen = ({props}: any) => {
 
     const [word, setName] = useState<any>();
@@ -26,7 +27,8 @@ const NewWordScreen = ({props}: any) => {
 
     return (
         <View >
-            <Text>Name Dictionary</Text>
+             <BackButton />
+            <Text>Name Word</Text>
             <TextInput
                 onChangeText={word => setName({ word })}
             />

@@ -6,21 +6,30 @@ import NewDictionaryScreen from './NewDictionaryScreen';
 import CurrentDictionary from './CurrentDictionaryScreen';
 import { View } from 'react-native';
 import NewWordScreen from './NewWordScreen';
-import * as navigation from '../../src/navigation/Navigation'
 const Stack = createStackNavigator();
 
 const DuctionaryTabs = () => {
     return (
         <Stack.Navigator>
+            
             <Stack.Screen
                 name="Dictionary"
                 component={DictionaryScreen}
+                options={{
+                    headerShown: false,
+                }}
             />
             <Stack.Screen
                 name="New Dictionary Screen"
                 component={NewDictionaryScreen}
+                options={{
+                    headerShown: false,
+                }}
             />
             <Stack.Screen
+             options={{
+                headerShown: false,
+            }}
                 name="NewWordScreen"
             >
                 {
@@ -33,6 +42,9 @@ const DuctionaryTabs = () => {
                 }
             </Stack.Screen>
             <Stack.Screen
+             options={{
+                headerShown: false,
+            }}
                 name="CurrentDictionary"
 
             >
