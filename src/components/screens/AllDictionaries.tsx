@@ -1,8 +1,9 @@
 import axios from 'axios';
-import React, { useState, useEffect } from 'react';
-import { View, Text, Image, StyleSheet, TextInput, Pressable } from 'react-native';
-import { TouchableOpacity, TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import React, { useState, useEffect, useCallback } from 'react';
+import { View, Text, Image, StyleSheet, TextInput, Pressable, RefreshControl } from 'react-native';
+import { ScrollView, TouchableOpacity, TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import DictionaryService from '../../../api-service/dictionary-service/DictionaryService'
+import WordService from '../../../api-service/word-service/WordService';
 import CustomButton from './CustomButton';
 
 const AllDictionaries = ({ navigation }: any) => {
@@ -15,19 +16,38 @@ const AllDictionaries = ({ navigation }: any) => {
 
     const openDictionary = (id: number) => {
         const dictionary = dictionaries?.filter(dict => dict?.id === id)
+
+       
         navigation.navigate("CurrentDictionary",{dictionary})
     }
 
     useEffect(() => {
         DictionaryService.getDictionaries().then((res) => {
+            
             setDictionaries(res.data)
         });
     }, [])
 
+
+    const [refreshing, setRefreshing] = useState(false);
+
+    const onRefresh = useCallback(() => {
+        setRefreshing(true);
+        DictionaryService.getDictionaries().then((res: any) => {
+            setDictionaries(res.data)
+        }). then(() => setRefreshing(false))
+       
+    }, []);
+
+
     return (
 
 
-        <View >
+        <View> 
+              <ScrollView
+            refreshControl={
+                <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }>
             {
                 (dictionaries?.length !== 0)
                 ?
@@ -36,7 +56,7 @@ const AllDictionaries = ({ navigation }: any) => {
                             <TouchableWithoutFeedback onPress={() => openDictionary(item!.id)} >
                                 <View style={styles.leftBlock}>
                                     <Text style={styles.text}>{item!.name}</Text>
-                                    <Text style={styles.text}>Words: {item!.count_word}</Text>
+                                    <Text style={styles.text}>Words: {item!.count_word }</Text>
                                 </View>
                             </TouchableWithoutFeedback>
                             <View style={styles.butons}>
@@ -52,6 +72,7 @@ const AllDictionaries = ({ navigation }: any) => {
                 :
                 <Text>You don't have dictionaries</Text>
             }
+            </ScrollView>
         </View>
 
 

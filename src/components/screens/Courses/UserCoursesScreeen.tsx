@@ -1,18 +1,18 @@
 import * as React from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, TouchableWithoutFeedback } from 'react-native';
-import CustomButton from './CustomButton';
+import CustomButton from '../CustomButton';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useEffect, useState } from 'react';
-import StorageManager from '../storage/StorageManager';
-import User from '../../../models/user/LoginModel';
+import StorageManager from '../../storage/StorageManager';
+import User from '../../../../models/user/LoginModel';
 import AsyncStorage from '@react-native-community/async-storage';
-import UserModel from '../../../models/user/UserModel';
-import BackButton from '../Buttons/BackButton';
-import Course from '../../../models/course/Course';
-import CourseService from '../../../api-service/course-service/CourseService';
-import UserCourse from '../../../models/course/UserCourse';
+import UserModel from '../../../../models/user/UserModel';
+import BackButton from '../../Buttons/BackButton';
+import Course from '../../../../models/course/Course';
+import CourseService from '../../../../api-service/course-service/CourseService';
+import UserCourse from '../../../../models/course/UserCourse';
 
-
+import * as navigation from '../../../navigation/Navigation';
 const UserCourseScreeen = () => {
 
 
@@ -24,7 +24,15 @@ const UserCourseScreeen = () => {
         })
     }, []);
 
+    const leaveFromCourse = (course_id : number) => {
+        CourseService.deleteUserCourse(course_id).then((res : any)=>{
+            setCourse(courses?.filter(cours => cours?.course.id != course_id))
+        })
+    } 
 
+    const createCourse = () =>{
+        navigation.navigate("NewCourse")
+    }
 
     return (
         <View style={{ backgroundColor: '#87DBFF', flex: 1 }}>
@@ -33,7 +41,7 @@ const UserCourseScreeen = () => {
                 <View style={styles.CourseBlocks}>
                     <Text style={styles.header}>Your Courses</Text>
                     {
-                        (courses?.length !== 0)
+                        (courses?.length !== 0 )
                             ?
                             courses?.map((item) => (
                                 <View  key={item!.course.id} style={styles.CourseBlock}>
@@ -44,13 +52,13 @@ const UserCourseScreeen = () => {
                                             <Text style={styles.courseDifficulty}>Difficulty: {item?.course.difficulty}</Text>
                                         </View>
                                     </TouchableWithoutFeedback>
-                                    <TouchableOpacity style={styles.leaveCourseButton}>
+                                    <TouchableOpacity style={styles.leaveCourseButton} onPress={() => leaveFromCourse(item.course.id)}>
                                         <Text style={{ color: 'white', fontSize: 18 }}>Leave Course</Text>
                                     </TouchableOpacity >
                                 </View>
                             ))
                             :
-                            <View>You don't have courses</View>
+                            <View><Text>You don't have courses</Text></View>
                     }
                 </View>
             </View>
@@ -61,7 +69,7 @@ const UserCourseScreeen = () => {
                     <Text style={styles.ownCourseDescription}>Hello Student here you can create own course where another
                         people can pass it of course if it passes the administrator check</Text>
                 </View>
-                <TouchableOpacity style={styles.createCourseButton}>
+                <TouchableOpacity style={styles.createCourseButton} onPress={() => createCourse()}>
                     <Text style={{ color: 'white', fontSize: 18 }}>Create Course</Text>
                 </TouchableOpacity >
 

@@ -28,11 +28,11 @@ import * as navigation from '../../../navigation/Navigation';
     };
 
     await AuthService.SignUp(userModel).then(async (res: any) => {
-      console.warn(res)
+     
     }).catch(err =>{
       console.warn(err)
     })
-    navigation.navigate('Login')
+    navigation.goBack()
 
   }
 

@@ -2,7 +2,7 @@ type Course = {
     id: number,
     name: string,
     description : string,
-    pass_percentage : number,
-    difficulty: number
+    difficulty: string,
+    prod: number
 }
 export default Course;

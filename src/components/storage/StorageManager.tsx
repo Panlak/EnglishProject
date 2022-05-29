@@ -12,7 +12,6 @@ const StorageManager = {
     },
 
     setAuthData: (data: AuthenticationResult) => {
-        console.warn(data)
         AsyncStorage.setItem("userToken", data.user.token);
         AsyncStorage.setItem("user", JSON.stringify(data.user));
     },

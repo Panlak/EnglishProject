@@ -22,7 +22,7 @@ export const AuthProvider = ({children}: any) => {
         setLoading(true);
         AuthService.Login({user: { email: email, password: password }})
         .then((res) => {
-            console.warn(res)
+           
             StorageManager.setAuthData(res.data);
             setUser(res.data.user);
         }).catch(err =>{

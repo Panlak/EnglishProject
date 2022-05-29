@@ -1,3 +1,4 @@
+import CreateCourseTest from "../src/components/screens/Courses/CreateCourseTest";
 import APIConfig from "./APIConfig";
 
 const APIRoutes = {
@@ -14,11 +15,22 @@ const APIRoutes = {
     getCourses: () => APIConfig.URL + 'course/index',
     createCourse: () => APIConfig.URL + 'course',
     deleteCourse: () => APIConfig.URL + 'course',
+    getPendingCourses: () => APIConfig.URL + 'course/pending_courses',
+    passCourse:() => APIConfig.URL + 'course/pass_course',
     //user course
 
     createUserCourse: () => APIConfig.URL + 'user_course',
-    getUserCourse: () => APIConfig.URL + 'user_course/index',
-    deleteUserCourse:() => APIConfig.URL + 'user_course'
-}
+    getUserCourse: () => APIConfig.URL + 'user_course/all_user_courses',
+    deleteUserCourse:() => APIConfig.URL + 'user_course',
+
+    createCourseTest:() => APIConfig.URL + 'course_test',
+    getCourseTest:() => APIConfig.URL + 'course_test/index',
+    deleteCourseTest:() => APIConfig.URL + 'course_tests',
+
+    createCourseTestWord:() => APIConfig.URL + 'test_word',
+    getCourseTestWord:() => APIConfig.URL + 'course_test_word/index',
+    deleteCourseTestWord:() => APIConfig.URL + 'test_word',
+   
+ }
 
 export default APIRoutes;

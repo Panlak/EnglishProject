@@ -7,7 +7,7 @@ const allWords = APIRoutes.Word();
 const deleteWord = APIRoutes.Word();
 const WordService = {
     createWord: async (word : Word) => APIService.post<any>(wordCreate,word),
-    getWords: async () => APIService.get<any>(allWords),
+    getWords: async  (dict_id:number) => APIService.get<any>(`${allWords}/${dict_id}`),
     deleteWord: async (id : number) => APIService.delete(`${deleteWord}/${id}`)
 }
 

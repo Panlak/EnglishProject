@@ -9,7 +9,7 @@ import BackButton from '../Buttons/BackButton';
 const DictionaryScreen = ({ navigation } : any) =>{
  
     return(
-        <View >
+        <View style={{ backgroundColor: '#87DBFF', flex: 1 }}>
             <BackButton/>
             <View style = {[styles.container]}>
                 

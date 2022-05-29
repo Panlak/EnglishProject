@@ -1,14 +1,16 @@
 import * as React from 'react';
-import { View, Text, TouchableWithoutFeedback, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TouchableWithoutFeedback, TouchableOpacity, StyleSheet, ScrollView, RefreshControl } from 'react-native';
 import AsyncStorage from "@react-native-community/async-storage";
 import Component from '../storage/CurrentUser';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import CurrentUser from '../storage/CurrentUser';
 import StorageManager from '../storage/StorageManager';
 import UserModel from '../../../models/user/UserModel'
 import CourseService from '../../../api-service/course-service/CourseService';
 import Course from '../../../models/course/Course';
 import BackButton from '../Buttons/BackButton';
+import UserCourse from '../../../models/course/UserCourse';
+import WordService from '../../../api-service/word-service/WordService';
 
 
 
@@ -17,26 +19,51 @@ import BackButton from '../Buttons/BackButton';
 const HomeScreen = ({ navigation }: any) => {
 
     const [courses, setCourses] = useState<Course[]>();
-    const [user, setUser] = useState<UserModel>();
+ 
 
+    const openCourse = (course_id: number) => {
+        const course = courses?.filter(cour => cour?.id === course_id);
 
-    const openCourse = (course_id : number) =>{
-        const course = courses?.filter(cour => cour?.id === course_id)
-        navigation.navigate("CurrentCourse",course)
+        CourseService.getUserCourse().then((res: any) => {
+            
+            const cour =  res.data.user_course?.filter((cour: any) => cour.user_course.course_id === course_id)
+          
+            const props = {
+               
+                isUserCourse: cour?.length == 0,
+                Currentcourse: course
+                
+            }
+
+            navigation.navigate("CurrentUserCourse", { props })
+        }) 
+
     }
+    const [refreshing, setRefreshing] = useState(false);
 
+    const onRefresh = useCallback(() => {
+        setRefreshing(true);
+        CourseService.getCourse().then((res: any) => {
+            setCourses(res.data);
+        }). then(() => setRefreshing(false))
+       
+    }, []);
 
+    
     useEffect(() => {
         CourseService.getCourse().then((res: any) => {
-            StorageManager.getAuthData().then(res => {
-                setUser(res)
-            })
+          
             setCourses(res.data);
         })
     }, []);
-    
+
     return (
         <View style={{ backgroundColor: '#87DBFF', flex: 1 }}>
+            <ScrollView
+            refreshControl={
+                <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }
+            >
             <View>
                 <View style={styles.CourseBlocks}>
                     <Text style={styles.header}>Hello Student</Text>
@@ -44,14 +71,13 @@ const HomeScreen = ({ navigation }: any) => {
                         (courses?.length !== 0)
                             ?
                             courses?.map((item) => (
-                                <View key={item!.id}>
-                                    <View style={styles.CourseBlock}>
-                                    <Text style = {styles.courseDifficulty}>Difficulty: {item.difficulty}</Text>
-                                        <TouchableWithoutFeedback onPress={() => openCourse(item!.id)}>
+                                <View >
+                                    <View style={styles.CourseBlock} >
+                                        <Text style={styles.courseDifficulty}>Difficulty: {item?.difficulty}</Text>
+                                        <TouchableWithoutFeedback key={item!.id}  onPress={() => openCourse(item!.id) }>
                                             <View>
                                                 <Text style={styles.courseName}>{item?.name}</Text>
                                                 <Text style={styles.courseDescription}>Description: {item?.description.slice(0, 100) + "..........."}</Text>
-
                                             </View>
                                         </TouchableWithoutFeedback>
 
@@ -59,11 +85,11 @@ const HomeScreen = ({ navigation }: any) => {
                                 </View>
                             ))
                             :
-                            <View>You don't have courses</View>
+                            <View><Text>Site didn't have courses</Text></View>
                     }
                 </View>
             </View>
-
+            </ScrollView>
         </View>
     );
 
@@ -71,22 +97,22 @@ const HomeScreen = ({ navigation }: any) => {
 }
 const styles = StyleSheet.create({
 
-    courseDifficulty:{
+    courseDifficulty: {
         fontSize: 15,
-        
+
         fontWeight: "bold",
         color: 'black',
     },
-    courseName:{
+    courseName: {
         fontSize: 20,
-        
+
         fontWeight: "bold",
         color: 'black',
 
     },
-    courseDescription:{
+    courseDescription: {
         fontSize: 15,
-        
+
         fontWeight: "400",
         color: 'black',
     },

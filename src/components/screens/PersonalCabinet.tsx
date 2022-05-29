@@ -15,37 +15,41 @@ import BackButton from '../Buttons/BackButton';
 
 const PersonalCabinet = ({ navigation }: any) => {
     const [user, setUser] = useState<UserModel>();
-    
+
     useEffect(() => {
         StorageManager.getAuthData().then(res => {
-            setUser(res)      
+            setUser(res)
         })
-        
+
     }, []);
     return (
         <View style={styles.container}>
             <View>
 
                 <View >
-                    <BackButton/>
+                    <BackButton />
                     <View style={styles.profileInformation}>
-                    
-                        <View  style={styles.mainProfile}>
-                            
+
+                        <View style={styles.mainProfile}>
+
                             <Image style={{ height: 100, width: 100 }} source={require('../../../photos/man-300x300.png')} />
-                            
+
                             <View>
-                            <Text style={styles.profileText}>{user?.email}</Text>
-                            <Text style={styles.profileText}>English Level: {user?.knowledge_lvl.name} </Text>
-                            
-                            <Text style={styles.profileText}>Courses passed: {user?.passed_course}</Text>
-                            <Text style={styles.profileText}>Ratting: {user?.ratting}</Text>
+                                <Text style={styles.profileText}>{user?.email}</Text>
+                                <Text style={styles.profileText}>English Level: {user?.knowledge_lvl.name} </Text>
+                                <Text style={styles.profileText}>Role: {user?.role == 1 ? "Admin" : "User"}</Text>
+                                <Text style={styles.profileText}>Courses passed: {user?.passed_course}</Text>
+                                <Text style={styles.profileText}>Ratting: {user?.ratting}</Text>
                             </View>
                         </View>
-                       
+
                     </View>
                     <CustomButton text="Courses" onPress={() => navigation.navigate('Courses')} />
                     <CustomButton text="Dictionary" onPress={() => navigation.navigate('Dictionary')} />
+                    {(user?.role == 1) ?
+                        <CustomButton text="Pending Courses" onPress={() => navigation.navigate('PendingCourses')} />
+                        : <View></View>
+                    }
                 </View>
 
             </View>
@@ -54,8 +58,8 @@ const PersonalCabinet = ({ navigation }: any) => {
     );
 };
 const styles = StyleSheet.create({
-    container:{
-        flex:1,
+    container: {
+        flex: 1,
         backgroundColor: '#87DBFF'
     },
     profileText: {
@@ -64,7 +68,7 @@ const styles = StyleSheet.create({
     },
 
     mainProfile: {
-       
+
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-around'
@@ -72,10 +76,10 @@ const styles = StyleSheet.create({
     profileInformation: {
         display: 'flex',
         backgroundColor: '#38D8CE',
-       
-       
+
+
     },
-    levelAccount:{
+    levelAccount: {
         alignSelf: 'center'
     }
 

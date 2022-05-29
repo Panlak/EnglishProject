@@ -3,15 +3,8 @@ import React from "react";
 
 export const navigationRef = React.createRef<any>();
 
-export const navigate = (name: string, params?: object) =>{
- 
-    try{
+export const navigate = (name: string, params?: object) => {
     navigationRef.current?.navigate(name, params);
-  
-
-    }catch(err){
-        console.warn(err);
-    }
 }
 
 export const goBack = () =>
@@ -19,5 +12,5 @@ export const goBack = () =>
 
 export const replace = (name: string, params?: object) =>
     navigationRef.current?.dispatch(
-        StackActions.replace(name,params)
-    );
+        StackActions.replace(name, params)
+);

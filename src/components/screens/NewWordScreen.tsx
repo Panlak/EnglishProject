@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, TextInput } from 'react-native';
+import { View, Text, TextInput, StyleSheet } from 'react-native';
 import AsyncStorage from "@react-native-community/async-storage";
 import CustomButton from './CustomButton';
 import Word from '../../../models/words/WordModel';
 import WordService from '../../../api-service/word-service/WordService';
 import BackButton from '../Buttons/BackButton';
-
-const NewWordScreen = ({props}: any) => {
+import { Input } from 'react-native-elements';
+import * as navigation from '../../navigation/Navigation'
+const NewWordScreen = ({ props }: any) => {
 
     const [word, setName] = useState<any>();
     const [translate, setTranslate] = useState<any>();
@@ -15,6 +16,7 @@ const NewWordScreen = ({props}: any) => {
         const wordCreate: Word = {
             word:
             {
+                id: 0,
                 word_name: word,
                 translate: translate,
                 english_dictionary_id: english_dictionary_id
@@ -22,22 +24,43 @@ const NewWordScreen = ({props}: any) => {
         };
 
         WordService.createWord(wordCreate);
-     
+        navigation.goBack();
     }
 
     return (
-        <View >
-             <BackButton />
-            <Text>Name Word</Text>
-            <TextInput
-                onChangeText={word => setName({ word })}
-            />
-            <TextInput
-                onChangeText={translate => setTranslate({ translate })}
-            />
-            <CustomButton text="Create" onPress={() => create()} />
+        <View style={{ backgroundColor: '#87DBFF', flex: 1 }}>
+            <BackButton />
+            <View>
+                <Input
+                    placeholder='Word Name'
+                    style={styles.inputStyles}
+                    autoCompleteType={""}
+                    onChangeText={word => setName({ word })}
+                    value={word} />
+
+                <Input
+                    placeholder='Translate'
+                    style={styles.inputStyles}
+
+                    autoCompleteType={""}
+                    onChangeText={translate => setTranslate({ translate })}
+                    value={translate} />
+
+                <CustomButton text="Create" onPress={() => create()} />
+            </View>
+
+
         </View>
     );
 }
+const styles = StyleSheet.create({
+    inputStyles: {
+        backgroundColor: 'white',
+        borderRadius: 10,
+        borderWidth: 1,
+
+    },
+})
+
 
 export default NewWordScreen;
