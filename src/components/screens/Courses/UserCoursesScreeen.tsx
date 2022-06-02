@@ -15,7 +15,6 @@ import UserCourse from '../../../../models/course/UserCourse';
 import * as navigation from '../../../navigation/Navigation';
 const UserCourseScreeen = () => {
 
-
     const [courses, setCourse] = useState<UserCourse[]>();
 
     useEffect(() => {

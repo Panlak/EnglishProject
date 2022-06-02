@@ -16,15 +16,28 @@ import TestWord from '../../../../models/course/TestWord';
 //change
 const CurrentUserCourse = ({ props }: any) => {
 
-
     const [course, setCourse] = useState<Course>(props.route.params.props.Currentcourse[0]);
     const [isUserCourse, setUserCourse] = useState<boolean>();
-    const [user, setUser] = useState<UserModel>()
+    const [user, setUser] = useState<UserModel>();
+
+    const [courseTests, setCourseTests] = useState<CourseTest[]>();
+    const [courseTestWords, setCourseTestWords] = useState<TestWord[]>();
+
     const CheckUserCourse = () => {
         CourseService.getUserCourse().then(async (res: any) => {
             const course = res.data.user_course?.filter((cour: any) => cour.user_course.course_id === props.route.params.props.Currentcourse[0].id)
             setUserCourse(course?.length == 0)
             //changes
+            if (course?.length != 0) {
+                CourseTestsService.getCourseTest(props.route.params.props.Currentcourse[0].id).then((res: any) => {
+                    setCourseTests(res.data)
+                    res.data.map((item: any) => (
+                        CourseTestWordService.getCourseTest(item.id).then((res: any) => {
+                            setCourseTestWords(res.data)
+                        })
+                    ))
+                })
+            }
         })
     }
 
@@ -69,16 +82,31 @@ const CurrentUserCourse = ({ props }: any) => {
                     </View>
                 </View>
                 <View>
-                    <Text style={{fontSize:20, color: 'black'}}>More Information About Course:</Text>
+                    <Text style={{ fontSize: 20, color: 'black' }}>More Information About Course:</Text>
                 </View>
                 <View >
                     {
                         (isUserCourse) ?
 
-                            <View><Text style={{fontSize:20, color: 'black'}}>Want to join?</Text></View>
+                            <View><Text style={{ fontSize: 20, color: 'black' }}>Want to join?</Text></View>
                             :
-                            <View><Text style={{fontSize:20, color: 'black'}}>Already in course</Text></View>
+                            <View><Text style={{ fontSize: 20, color: 'black' }}>Already in course</Text></View>
                     }
+                    <Text style={styles.header}>Tests Course</Text>
+                            {
+                                courseTests?.map((item) => (
+                                    <View style={styles.CourseBlock}>
+                                        <Text style={styles.textColorTests}>Name: {item.name}</Text>
+                                        <Text style={styles.textColorTests}>Desc: {item.description}</Text>
+                                        <Text style={[styles.textColorTests, { marginTop: 20 }]}>Text:</Text>
+                                        <View style={styles.textAreaTest}>
+                                            <Text style={styles.textColor}>{item.text}</Text>
+                                        </View>
+
+                                    </View>
+                                ))
+
+                            }
 
                     <View style={styles.buttonsBlock}>
                         {
@@ -123,7 +151,25 @@ const CurrentUserCourse = ({ props }: any) => {
 export default CurrentUserCourse;
 
 const styles = StyleSheet.create({
+    textColorTests: {
+        color: 'black',
+        fontSize: 20
+    },
+    textColor: {
+        color: 'black'
+    },
+    wordsArae: {
+        borderWidth:1,
+        padding: 20,
+        alignItems: 'center',
+        backgroundColor: 'white'
+    },
 
+    textAreaTest: {
+        backgroundColor: 'white',
+        padding: 10,
+
+    },
     buttonsBlock: {
         display: 'flex',
         flexDirection: 'row',
