@@ -71,10 +71,10 @@ const HomeScreen = ({ navigation }: any) => {
                         (courses?.length !== 0)
                             ?
                             courses?.map((item) => (
-                                <View >
+                                <View key={item!.id}>
                                     <View style={styles.CourseBlock} >
                                         <Text style={styles.courseDifficulty}>Difficulty: {item?.difficulty}</Text>
-                                        <TouchableWithoutFeedback key={item!.id}  onPress={() => openCourse(item!.id) }>
+                                        <TouchableWithoutFeedback   onPress={() => openCourse(item!.id) }>
                                             <View>
                                                 <Text style={styles.courseName}>{item?.name}</Text>
                                                 <Text style={styles.courseDescription}>Description: {item?.description.slice(0, 100) + "..........."}</Text>
