@@ -20,6 +20,7 @@ const CurrentUserCourse = ({ props }: any) => {
         CourseService.getUserCourse().then(async (res: any) => {
             const course = res.data.user_course?.filter((cour: any) => cour.user_course.course_id === props.route.params.props.Currentcourse[0].id)
             setUserCourse(course?.length == 0)
+            //changes
         })
     }
 
