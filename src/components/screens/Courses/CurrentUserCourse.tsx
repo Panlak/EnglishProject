@@ -9,7 +9,11 @@ import BackButton from '../../Buttons/BackButton';
 import * as navigation from '../../../navigation/Navigation';
 import UserModel from '../../../../models/user/UserModel';
 import StorageManager from '../../storage/StorageManager';
-
+import CourseTestsService from '../../../../api-service/course-test/CourseTestsService';
+import CourseTestWordService from '../../../../api-service/course-word-test-service/CourseTestWordService';
+import CourseTest from '../../../../models/course/CourseTest';
+import TestWord from '../../../../models/course/TestWord';
+//change
 const CurrentUserCourse = ({ props }: any) => {
 
 
